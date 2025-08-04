@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Penalty Shootout</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b0c10;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    #game {
+      width: 100%;
+      max-width: 400px;
+      height: 600px;
+      background: linear-gradient(to top, #1f2833, #45a29e);
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+    }
+
+    .goal {
+      width: 100%;
+      height: 100px;
+      background: #66fcf1;
+      position: absolute;
+      top: 0;
+      border-bottom: 4px solid #fff;
+    }
+
+    .goalie {
+      width: 80px;
+      height: 20px;
+      background: #c5c6c7;
+      position: absolute;
+      top: 70px;
+      left: 160px;
+      border-radius: 10px;
+      transition: left 0.3s;
+    }
+
+    .ball {
+      width: 30px;
+      height: 30px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      transition: bottom 0.5s, left 0.5s;
+    }
+
+    .scoreboard {
+      margin: 10px;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="scoreboard">Score: <span id="score">0</span></div>
+  <div id="game" onclick="kick(event)">
+    <div class="goal"></div>
+    <div class="goalie" id="goalie"></div>
+    <div class="ball" id="ball"></div>
+  </div>
+
+  <script>
+    let score = 0;
+    const goalie = document.getElementById('goalie');
+    const ball = document.getElementById('ball');
+    const scoreDisplay = document.getElementById('score');
+
+    function moveGoalie() {
+      const left = Math.random() * 320;
+      goalie.style.left = `${left}px`;
+    }
+
+    function kick(event) {
+      const game = document.getElementById('game');
+      const x = event.clientX - game.getBoundingClientRect().left;
+      const y = event.clientY - game.getBoundingClientRect().top;
+
+      // Animate ball to where user tapped
+      ball.style.left = `${x - 15}px`;
+      ball.style.bottom = `${600 - y}px`;
+
+      setTimeout(() => {
+        // Collision detection
+        const goalieLeft = goalie.offsetLeft;
+        const ballLeft = ball.offsetLeft;
+
+        if (ballLeft > goalieLeft - 30 && ballLeft < goalieLeft + 80) {
+          alert("😢 Missed! Try again.");
+          score = 0;
+        } else {
+          alert("🎉 Goal!");
+          score++;
+        }
+
+        scoreDisplay.textContent = score;
+        resetBall();
+        moveGoalie();
+      }, 500);
+    }
+
+    function resetBall() {
+      ball.style.bottom = "40px";
+      ball.style.left = "50%";
+    }
+
+    moveGoalie();
+    setInterval(moveGoalie, 2000);
+  </script>
+
+</body>
+</html>
