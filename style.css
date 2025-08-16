@@ -1,0 +1,82 @@
+﻿/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #0a0f2c;
+  color: white;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Splash screen */
+#splash {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #0a0f2c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.mask-logo {
+  width: 150px;
+  animation: glow 2s infinite alternate;
+}
+
+.laser {
+  width: 200px;
+  height: 2px;
+  background: cyan;
+  margin-top: 20px;
+  animation: laser 2s infinite linear;
+}
+
+@keyframes glow {
+  from { filter: drop-shadow(0 0 10px cyan); }
+  to { filter: drop-shadow(0 0 30px cyan); }
+}
+
+@keyframes laser {
+  0% { transform: scaleX(0); opacity: 0.5; }
+  50% { transform: scaleX(1); opacity: 1; }
+  100% { transform: scaleX(0); opacity: 0.5; }
+}
+
+/* Sign In Page */
+#signin {
+  text-align: center;
+}
+
+.hidden { display: none; }
+
+.glow-text {
+  font-size: 2.5rem;
+  color: cyan;
+  text-shadow: 0 0 10px cyan, 0 0 20px cyan;
+  margin-bottom: 20px;
+}
+
+.google-btn {
+  background: white;
+  color: #333;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0,255,255,0.6);
+  transition: transform 0.2s;
+}
+
+.google-btn:hover {
+  transform: scale(1.05);
+}
